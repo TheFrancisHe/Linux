@@ -4,7 +4,15 @@ https://linux.cn/article-2434-1.html
 
 https://segmentfault.com/a/1190000008633528
 
+
+关于UDP与TCP的关系：
+
+http://blog.csdn.net/li_ning_/article/details/52117463
+
+
 对于数据库连接而言，通过netstat可以查看当前连接协议，是udp还是tcp（包括ipv4和ipv6）。
+
+实验1：
 
 如果本地直接使用psql命令连接，则为udp：
 
@@ -26,7 +34,10 @@ unix  3      [ ]         STREAM     CONNECTED     40742  5697/psql
 结论:可以看出来，如果命令仅仅是psql，（只要不涉及 -h -p）那么连接均为udp协议，ipc通信较快的一种。
 ```
 
+
+
 既然是udp协议，通过udp协议的连接，则被pg_hba.conf 中下面的item所管理：
+
 
 ```
 # "local" is for Unix domain socket connections only
