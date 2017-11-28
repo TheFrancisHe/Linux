@@ -114,5 +114,17 @@ listen_addresses controls which interfaces accept connection attempts, which can
 
 
 >This parameter can only be set at server start.
-参数必须重启
+
+参数修改后必须重启
+
+
+**listen_addresses 参数作为服务器端的一种连接过滤方式，修改时，必须结合以下几点：**
+
+
+    1./etc/hosts
+    2.unix_socket_directories
+    3.pg_hba.conf
+    4.当前OS对于IPV4与IPV6的支持情况
+
+
 
