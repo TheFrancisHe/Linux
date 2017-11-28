@@ -1,6 +1,6 @@
 关于IPV4和IPV6下的localhost：
 
-`localhost 是个域名，不是地址，它可以被配置为任意的 IP 地址(/etc/hosts)，不过通常情况下都指向 127.0.0.1(ipv4)和 ::1`
+`localhost 是个域名，不是地址，它可以被配置为任意的 IP 地址，通常情况下都指向 127.0.0.1(ipv4)和 ::1`
 
 ### listen_addresses (string)
 
