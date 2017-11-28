@@ -1,4 +1,7 @@
-### 由于环境变量 PGHOST配置不当引起的psql: could not connect to server: No such file or directory
+### 由于环境变量 PGHOST配置不当引起的 
+
+`psql: could not connect to server: No such file or directory`
+
 
 如果环境变量里并未配置PGHOST，则psql不加-h命令的时候，unix-domain-socket使用的是数据库参数unix_socket_directories 的默认值(一般是/tmp)
 作为unix-domain-socket路径。
