@@ -8,7 +8,7 @@
 
 >Specifies the TCP/IP address(es) on which the server is to listen for connections from client applications. 
 
-指定server使用那个interface（如IPV4、IPV6（若支持））进行监听，甚至不监听客户端连接。
+指定server使用那个interface（如IPV4、IPV6（若支持））进行监听。
 
 >The value takes the form of a comma-separated list of host names and/or numeric IP addresses.
 
@@ -56,6 +56,8 @@ unix  2      [ ACC ]     STREAM     LISTENING     265956 29816/postgres      ./.
 
 
 >If the list is empty, the server does not listen on any IP interface at all, in which case only Unix-domain sockets can be used to connect to it.
+
+当listen_addresses参数值为空，postgres server 则不会监听任何TCP-IP的请求，只允许客户端通过Unix-domain sockets 连接。
 
 ```
 [root@pgdb ~]# netstat -anpo|grep 1921
