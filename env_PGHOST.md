@@ -2,14 +2,16 @@
 
 `psql: could not connect to server: No such file or directory`
 
-
-如果环境变量并未配置PGHOST，则psql不加-h命令的时候，默认使用的是数据库参数unix_socket_directories 的默认值(一般是/tmp)
+#### 情况1 
+并未配置环境变量PGHOST，则psql不加-h命令的时候，默认使用的是数据库参数unix_socket_directories 的默认值(一般是/tmp)
 作为unix-domain-socket路径。
 
 即：`psql 相当于 psql -h /tmp`
 
 
-#### 未配置环境变量PGHOST,且修改了unix_socket_directories参数，则直接使用psql命令连接会报错：
+#### 情况2
+
+未配置环境变量PGHOST,且修改了unix_socket_directories参数，则直接使用psql命令连接会报错：
 
 ```
 注：postgres server 是运行状态
