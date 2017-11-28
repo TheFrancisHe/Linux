@@ -1,7 +1,6 @@
 - 关于环境变量 PGHOST-
 
 如果环境变量里并未配置PGHOST，则psql不加-h命令的时候，unix-domain-socket使用的是数据库参数unix_socket_directories 的默认值(一般是/tmp)
-
 作为unix-domain-socket路径。
 
 
