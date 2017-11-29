@@ -34,6 +34,8 @@
  
  ```
 ***
+
+**以下场景只是针对TCP-IP的监听程序绑定情况，不考虑udp，在介绍 unix_socket_directories 时，会详细表述udp下的监听绑定情况**
  
  
 #### 官方文档是如何解释listen_addresses的呢？
@@ -97,26 +99,28 @@ tcp        0      0 0.0.0.0:1921  0.0.0.0:*      LISTEN      29816/post
 //udp
 unix  2      [ ACC ]     STREAM     LISTENING     265956 29816/postgres      ./.s.PGSQL.1921
 ```
-
+***
 
 >If the list is empty, the server does not listen on any IP interface at all, in which case only Unix-domain sockets can be used to connect to it.
 
-*当listen_addresses参数值为空，postgres server 则监听程序将不会注册在TCP-IP协议的网卡，此时只允许客户端通过Unix-domain sockets 连接。*
+当listen_addresses参数值为空，postgres server 则监听程序将不会注册在TCP-IP协议的网卡，此时只允许客户端通过Unix-domain sockets 连接。
 
 ```
 [root@pgdb ~]# netstat -anpo|grep 1921
-//可以看出，所有通过localhost连接的连接状态要么是 FIN_WAIT2 要么是 CLOSE_WAIT
-tcp        0      0 127.0.0.1:1921              127.0.0.1:48090             FIN_WAIT2   -                   timewait (54.46/0/0)
+//可以看出，通过tcp-ip连接的应用程序进程状态均为FIN_WAIT2,或者CLOSE_WAIT.因为此时postgres不监听任何tcp-ip类型请求。
+tcp        0      0 127.0.0.1:1921              127.0.0.1:48090             FIN_WAIT2   -                   timewait (54.46/0/0)
 tcp        0      0 127.0.0.1:1921              127.0.0.1:48377             FIN_WAIT2   -                   timewait (54.46/0/0)
 tcp      111      0 127.0.0.1:48009             127.0.0.1:1921              CLOSE_WAIT  2326/zabbix_server  off (0.00/0/0)
 
 //这时，postgres server 只对unix-socket domain进行监听。
 unix  2      [ ACC ]     STREAM     LISTENING     265956 29816/postgres      ./.s.PGSQL.1921
 ```
-
+***
 >The default value is localhost, which allows only local TCP/IP "loopback" connections to be made. 
 
-*默认值是localhost，则监听程序仅仅注册在本地/etc/hosts中localhost对应的IP地址上(一般是127.0.0.1或::1)。这意味着，只有本机客户端只能通过localhost 连接数据库。*
+默认值是localhost，则监听程序仅仅注册在本地/etc/hosts中localhost对应的IP地址上(一般是127.0.0.1或::1)。
+
+这意味着，只有本机客户端只能通过localhost 连接数据库，或者通过udp连接数据库*
 
 ```
 //ipv4的连接
@@ -146,23 +150,27 @@ cat /etc/hosts
 
 -------------------------------
 //这时，仅仅监听IPV4的本地连接，不再监听本地IPV6连接了。
+
 tcp        0      0 127.0.0.1:1921              0.0.0.0:*                   LISTEN      31957/postgres      off (0.00/0/0)
 
 
 unix  2      [ ACC ]     STREAM     LISTENING     281562 31739/postgres      ./.s.PGSQL.1921
 ```
+***
 
 >While client authentication (Chapter 19) allows fine-grained control over who can access the server, 
 listen_addresses controls which interfaces accept connection attempts, which can help prevent repeated malicious connection requests on insecure network interfaces. 
 
-`对比来看，client authentication（客户端认证）是用于控制具体哪些客户端可以访问服务器，
-而listen_addresses则是控制postgres server 具体使用哪个(IPV4/IPV6/BOTH)网络接口(interface)进行监听连接请求,对于网络接口而言，这可以有效阻止对大量恶意重复的连接`
+对比来看，client authentication（客户端认证）是用于控制具体哪些客户端可以访问服务器，
+而listen_addresses则是控制postgres server 具体使用哪个(IPV4/IPV6/BOTH)网络接口(interface)进行监听连接请求,对于网络接口而言，这可以有效阻止对大量恶意重复的连接
 
+***
 
 >This parameter can only be set at server start.
 
-`参数修改后必须重启`
+参数修改后必须重启
 
+***
 
 **listen_addresses 参数作为服务器端的一种连接过滤方式，修改时，必须结合以下几点：**
 
