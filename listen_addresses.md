@@ -39,7 +39,9 @@
 
 **以下场景只是针对TCP-IP的监听程序绑定情况，不考虑udp，在介绍 unix_socket_directories 时，会详细表述udp下的监听绑定情况**
  
- 
+***
+正文开始
+
 #### 官方文档是如何解释listen_addresses的呢？
  
  
