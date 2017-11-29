@@ -178,6 +178,7 @@ listen_addresses controls which interfaces accept connection attempts, which can
 
 **listen_addresses 参数作为服务器端的一种连接过滤方式，修改时，必须结合以下几点：**
 
+在之后的文章会介绍以下几点：
 
     1./etc/hosts
     2.unix_socket_directories
