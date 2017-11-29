@@ -1,14 +1,16 @@
 - 关于网络的一个知识点
 
-关于IPV4和IPV6下的localhost：
+`localhost 是个域名，不是地址，它可以被配置为任意的 IP 地址，通常情况下都指向 127.0.0.1(ipv4)和 ::1(ipv6)`
 
-`localhost 是个域名，不是地址，它可以被配置为任意的 IP 地址，通常情况下都指向 127.0.0.1(ipv4)和 ::1`
+***
 
 - 关于listen_addresses的简单理解：
 
  `允许Postgres server 监听程序绑定在某种类型（IPV4/IPV6）IP 或者某个具体IP上`
  
  `因为我们知道一个host上可以有多个网卡，每个网卡也可以绑定多个IP，该参数就是控制Postgres到底绑定在哪个或者哪几个IP上`
+
+***
  
  
  如果postgres所在服务器，一共绑定了5个不同类型的IP，
@@ -30,10 +32,10 @@
  当listen_addresses='::' 这时候所有的pgadmin只能通过192.168.100.5(IPV6)或者192.168.100.6(IPV6)作为连接信息来连接了。
  
  ```
+***
  
  
- 
-- 官方文档是如何解释listen_addresses的呢？
+#### 官方文档是如何解释listen_addresses的呢？
  
  
 
