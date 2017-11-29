@@ -6,18 +6,18 @@
 
 - 关于listen_addresses的简单理解：
 
- `允许Postgres server 监听哪些类型（如IPV4还是IPV6）的本地IP，或者哪个具体的本地IP`
+ `允许Postgres server 监听程序绑定在某种类型（IPV4/IPV6）IP 或者某个具体IP上`
  
- `因为我们知道一个host上可以有多个网卡，每个网卡也可以绑定多个IP，该参数就是控制Postgres到底监听来自哪个IP的连接请求`
+ `因为我们知道一个host上可以有多个网卡，每个网卡也可以绑定多个IP，该参数就是控制Postgres到底绑定在哪个或者哪几个IP上`
  
  
  如果postgres所在服务器，一共绑定了5个不同类型的IP，
  
  分别是192.168.100.2(IPV4)/192.168.100.3(IPV4)/192.168.100.4(IPV4)/192.168.100.5(IPV6)/192.168.100.6(IPV6)
  
- ` 当listen_addresses=192.168.100.5 时，这代表postgres只监听本机上某块网卡上的IP地址为192.168.100.5的请求。`
+ ` 当listen_addresses=192.168.100.5 时，这代表postgres只绑定在192.168.100.5,只监听所有发给192.168.100.5的请求。`
  
- ` 当listen_addresses=* 时，这代表postgres监听本地所有类型IP的请求。`
+ ` 当listen_addresses=* 时，这代表postgres监听程序绑定在所有本地IP上。`
  
  重点是"本地IP"
  
@@ -54,13 +54,13 @@
 postgres=# alter system set listen_addresses = '127.0.0.1,::1';
 ALTER SYSTEM
 
-值可以是 127.0.0.1,0.0.0.0,::,::1,localhost,* 的排列组合
+值可以是 127.0.0.1,0.0.0.0,::,::1,localhost,所有本地IP* 的排列组合
 ```
 
 
 >The special entry * corresponds to all available IP interfaces. 
 
-若值为*，则代表 既监听IPV4的请求，又监听IPV6的请求。
+若值为*，则代表监听程序绑定在所有可用的IP地址上。
 
 ```
 [root@pgdb ~]# netstat -anpo|grep 1921
