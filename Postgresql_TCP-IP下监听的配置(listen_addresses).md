@@ -13,13 +13,13 @@
  `因为我们知道一个host上可以有多个网卡，每个网卡也可以绑定多个IP，该参数就是控制Postgres到底绑定在哪个或者哪几个IP上`
 
 ***
- 
+ IPV6的地址只是举例，并非格式正确的地址
  
  如果postgres所在服务器，一共绑定了5个不同类型的IP，
  
- 分别是192.168.100.2(IPV4)/192.168.100.3(IPV4)/192.168.100.4(IPV4)/192.168.100.5(IPV6)/192.168.100.6(IPV6)
+ 分别是192.168.100.2(IPV4)/192.168.100.3(IPV4)/192.168.100.4(IPV4)/xxxxxxxxxx(IPV6)/AAAAAAAAAA(IPV6)
  
- ` 当listen_addresses=192.168.100.5 时，这代表postgres只绑定在192.168.100.5,只监听所有发给192.168.100.5的请求。`
+ ` 当listen_addresses=192.168.100.5 时，这代表postgres只绑定在xxxxxxxxxx,只监听所有发给xxxxxxxxxx的请求。`
  
  ` 当listen_addresses=* 时，这代表postgres监听程序绑定在所有本地IP上。`
  
@@ -32,7 +32,7 @@
  
  pgadmin客户端均可以通过以上五个IP+5432的端口号来给连接postgres并给postgres发请求。
  
- 当listen_addresses='::' 这时候所有的pgadmin只能通过192.168.100.5(IPV6)或者192.168.100.6(IPV6)作为连接信息来连接了。
+ 当listen_addresses='::' 这时候所有的pgadmin只能通过xxxxxxx(IPV6)或者AAAAAAAA(IPV6)作为连接信息来连接了。
  
  ```
 ***
