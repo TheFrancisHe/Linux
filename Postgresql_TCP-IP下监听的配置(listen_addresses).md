@@ -20,7 +20,7 @@
  分别是192.168.100.2(IPV4)/192.168.100.3(IPV4)/192.168.100.4(IPV4)/2031:0000:1F1F:0000:0000:0100:11A0:ADDF
 (IPV6)/2031:0000:1F1F:0000:0000:0100:11A0:ADDE(IPV6)
  
- ` 当listen_addresses=2031:0000:1F1F:0000:0000:0100:11A0:ADDF 时，这代表postgres只绑定在xxxxxxxxxx,只监听所有发给xxxxxxxxxx的请求。`
+ ` 当listen_addresses=2031:0000:1F1F:0000:0000:0100:11A0:ADDF 时，这代表postgres只绑定在2031:0000:1F1F:0000:0000:0100:11A0:ADDF,只监听所有发给2031:0000:1F1F:0000:0000:0100:11A0:ADDF的请求。`
  
  ` 当listen_addresses=* 时，这代表postgres监听程序绑定在所有本地IP上。`
  
@@ -33,7 +33,7 @@
  
  pgadmin客户端均可以通过以上五个IP+5432的端口号来给连接postgres并给postgres发请求。
  
- 当listen_addresses='::' 这时候所有的pgadmin只能通过xxxxxxx(IPV6)或者AAAAAAAA(IPV6)作为连接信息来连接了。
+ 当listen_addresses='::' 这时候所有的pgadmin只能通过2031:0000:1F1F:0000:0000:0100:11A0:ADDF(IPV6)或者2031:0000:1F1F:0000:0000:0100:11A0:ADDE(IPV6)作为连接信息来连接了。
  
  ```
 ***
