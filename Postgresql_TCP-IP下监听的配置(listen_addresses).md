@@ -17,7 +17,8 @@
  
  如果postgres所在服务器，一共绑定了5个不同类型的IP，
  
- 分别是192.168.100.2(IPV4)/192.168.100.3(IPV4)/192.168.100.4(IPV4)/xxxxxxxxxx(IPV6)/AAAAAAAAAA(IPV6)
+ 分别是192.168.100.2(IPV4)/192.168.100.3(IPV4)/192.168.100.4(IPV4)/2031:0000:1F1F:0000:0000:0100:11A0:ADDF
+(IPV6)/2031:0000:1F1F:0000:0000:0100:11A0:ADDE(IPV6)
  
  ` 当listen_addresses=AAAAAAAAAA 时，这代表postgres只绑定在xxxxxxxxxx,只监听所有发给xxxxxxxxxx的请求。`
  
