@@ -1,4 +1,8 @@
 ```
+导入测试数据前，一定要询问好，是否可以关闭归档，这是最重要的。
+否则，慢腾腾的熬死你。
+
+
 [postgres@sds1 archivedir]$ ls -lrth|tail -10//按时间排序后，显示最后10条
 -rw-------. 1 postgres postgres  16M Dec 15 14:54 0000000500000091000000F1
 -rw-------. 1 postgres postgres  16M Dec 15 14:54 0000000500000091000000F2
