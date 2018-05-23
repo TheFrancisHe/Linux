@@ -42,3 +42,32 @@ benchmark1-#              from j1 join j2 on j1.c2 = j2.c2 left join j3 on j2.c2
  Execution time: 3204.916 ms
 (15 rows)
 ```
+
+disable gpu accelerating
+
+```
+benchmark1=# SET pg_strom.enabled = off;
+SET
+benchmark1=# set enable_hashjoin = off;
+SET
+benchmark1=# set enable_mergejoin = off;
+SET
+benchmark1=# explain analyze select j1.c1 a, j1.c2 b, j2.c1 c, j2.c2 d, j3.c1 e, j3.c2 f into pg_temp.hoge1 from j1 join j2 on j1.c2 = j2.c2 left join j3 on j2.c2 = j3.c2;
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Nested Loop Left Join  (cost=0.00..6269585.00 rows=101616 width=12) (actual time=0.631..51260.832 rows=96499 loops=1)
+   Join Filter: (j2.c2 = j3.c2)
+   Rows Removed by Join Filter: 305924983
+   ->  Nested Loop  (cost=0.00..1500315.00 rows=31794 width=8) (actual time=0.600..11473.549 rows=30602 loops=1)
+         Join Filter: (j1.c2 = j2.c2)
+         Rows Removed by Join Filter: 99969398
+         ->  Seq Scan on j1  (cost=0.00..145.00 rows=10000 width=4) (actual time=0.015..2.859 rows=10000 loops=1)
+         ->  Materialize  (cost=0.00..195.00 rows=10000 width=4) (actual time=0.000..0.430 rows=10000 loops=10000)
+               ->  Seq Scan on j2  (cost=0.00..145.00 rows=10000 width=4) (actual time=0.013..0.929 rows=10000 loops=1)
+   ->  Materialize  (cost=0.00..195.00 rows=10000 width=4) (actual time=0.000..0.557 rows=10000 loops=30602)
+         ->  Seq Scan on j3  (cost=0.00..145.00 rows=10000 width=4) (actual time=0.011..1.017 rows=10000 loops=1)
+ Planning time: 0.575 ms
+ Execution time: 51316.924 ms
+(13 rows)
+
+```
